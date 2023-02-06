@@ -8,6 +8,7 @@ public class AppInitializer {
 
         //input value
         Scanner input = new Scanner(System.in);
+        boolean exitState=false;
 
         //program initializer
         String[] initializeQuestions = {
@@ -16,32 +17,34 @@ public class AppInitializer {
                 "3) Do you want to exit here?"
         };
 
-        for (String question : initializeQuestions) {
-            System.out.println(question);
+
+        while (!exitState){
+            for (String question : initializeQuestions) {
+                System.out.println(question);
+            }
+
+            int userInput = input.nextInt();
+
+            switch (userInput) {
+                case 1:
+                    if (login()) {
+                        openDashboard();
+                    }
+                    break;
+                case 2:
+                    if (register()) {
+                        openDashboard();
+                    }
+                    break;
+                case 3:
+                    System.out.println("Good bye...!!");
+                    return;
+
+                default:
+                    System.out.println("Wrong input");
+                    return;// return
+            }
         }
-
-        int userInput = input.nextInt();
-
-        switch (userInput) {
-            case 1:
-                if (login()) {
-                    openDashboard();
-                }
-                break;
-            case 2:
-                if (register()) {
-                    openDashboard();
-                }
-                break;
-            case 3:
-
-                break;
-
-            default:
-                System.out.println("Wrong input");
-                return;// return
-        }
-
     }
 
     //login process
@@ -82,7 +85,7 @@ public class AppInitializer {
         String pwd = insertRegDet.nextLine();
 
         for (int i = 0; i < users.length; i++) {
-            if (users[i] == null) {
+            if ( users[i] == null) {
                 users[i][0] = email;
                 users[i][1] = pwd;
                 return true;
