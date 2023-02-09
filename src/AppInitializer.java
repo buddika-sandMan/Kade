@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class AppInitializer {
-    //database area
+    //database area | can access all around the project
     static String[][] users = new String[3][2];
 
     public static void main(String[] args) {
@@ -32,14 +32,17 @@ public class AppInitializer {
             switch (userInput) {
                 case 1:
                     if (login()) {
+                        printUI("Dashboard");
                         openDashboard();
                     }
                     printUI("Application");
                     break;
                 case 2:
                     if (register()) {
+                        printUI("Dashboard");
                         openDashboard();
                     }
+                    printUI("Application");
                     break;
                 case 3:
                     System.out.println("Good bye...!!");
@@ -56,7 +59,7 @@ public class AppInitializer {
     //print UI
     public static void printUI(String position){
 
-        Date getDate = new Date();
+        Date getDate = new Date();22
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -76,15 +79,15 @@ public class AppInitializer {
         String pwd = input.nextLine();
 
         for (int i = 0; i < users.length; i++) {
-            if (users[i][0] != null && users[i][0].equalsIgnoreCase(email)) {
-                if (users[i][1].equalsIgnoreCase(pwd)) {
+            if (users[i][0] != null && users[i][0].equals(email)) {
+                if (users[i][1].equals(pwd)) {
                     System.out.println("Welcome");
                     return true;
                 }
             } else {
                 System.out.println("Wrong user name or password");
                 return false;
-            }
+                }
         }
         System.out.println("404 not found");
         return false;
@@ -128,6 +131,19 @@ public class AppInitializer {
 
     //dashboard process
     public static void openDashboard() {
-        printUI("Dashboard");
+        String dashboardQuestions[] = {
+                "1) Customer Management",
+                "2) Order Management",
+                "3) Item Management",
+                "4) Logout"
+        };
+
+        while (true){
+            for (String question:dashboardQuestions) {
+                System.out.println(question);
+            }
+            return;
+        }
+
     }
 }
