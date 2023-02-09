@@ -1,3 +1,7 @@
+import javafx.scene.input.DataFormat;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class AppInitializer {
@@ -30,6 +34,7 @@ public class AppInitializer {
                     if (login()) {
                         openDashboard();
                     }
+                    printUI("Application");
                     break;
                 case 2:
                     if (register()) {
@@ -47,8 +52,23 @@ public class AppInitializer {
         }
     }
 
+
+    //print UI
+    public static void printUI(String position){
+
+        Date getDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+        String date = dateFormat.format(getDate);
+        String time = timeFormat.format(getDate);
+
+        System.out.println("================="+date+"================="+time+"================="+position+"=================");
+    }
+
     //login process
     public static boolean login() {
+        printUI("Login");
         Scanner input = new Scanner(System.in);
         System.out.println("Enter your email");
         String email = input.nextLine();
@@ -73,30 +93,34 @@ public class AppInitializer {
 
     //register process
     public static boolean register() {
+        printUI("Register");
         if (users[users.length - 1][0] != null) {
             System.out.println("The database is already full");
             return false;
         }
 
-        Scanner insertRegDet = new Scanner(System.in);
+        Scanner insertRegDetails = new Scanner(System.in);
         System.out.println("Enter your email");
-        String email = insertRegDet.nextLine();
+        String email = insertRegDetails.nextLine();
         System.out.println("Enter your password");
-        String pwd = insertRegDet.nextLine();
+        String pwd = insertRegDetails.nextLine();
+
 
         for (int i = 0; i < users.length; i++) {
-            if ( users[i] == null) {
+            if (users[i][0] == null) {
                 users[i][0] = email;
                 users[i][1] = pwd;
+                System.out.println("Record successfully added");
                 return true;
             } else {
-                if (users[i][0].equalsIgnoreCase(email)) {
+                if (users[i][0] != null && users[i][0].equalsIgnoreCase(email)) {
                     System.out.println("Already exist email.");
                     return false;
                 }
             }
 
         }
+        System.out.println("Something went wrong");
         return false;
 
 
@@ -104,5 +128,6 @@ public class AppInitializer {
 
     //dashboard process
     public static void openDashboard() {
+        printUI("Dashboard");
     }
 }
