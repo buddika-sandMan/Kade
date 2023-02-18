@@ -8,6 +8,8 @@ public class AppInitializer {
     //database area | can access all around the project
     static String[][] users = new String[3][2];
 
+    static String[][] customer = new String[100][4];
+
     public static void main(String[] args) {
 
         //input value
@@ -59,7 +61,7 @@ public class AppInitializer {
     //print UI
     public static void printUI(String position){
 
-        Date getDate = new Date();22
+        Date getDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -131,19 +133,173 @@ public class AppInitializer {
 
     //dashboard process
     public static void openDashboard() {
+
+        Scanner input = new Scanner(System.in);
+
         String dashboardQuestions[] = {
                 "1) Customer Management",
-                "2) Order Management",
-                "3) Item Management",
+                "2) Item Management",
+                "3) Order Management",
                 "4) Logout"
         };
+
 
         while (true){
             for (String question:dashboardQuestions) {
                 System.out.println(question);
             }
-            return;
+
+            int userInput = input.nextInt();
+
+            switch (userInput){
+                case 1:
+                    customerManagement();
+                    break ;
+                case 2:
+                    orderManagement();
+                    break;
+                case 3:
+                    itemManagement();
+                    break;
+                case 4:
+                    System.out.println("Good bye...!!!");
+                    return;
+                default:
+                    System.out.println("Something went wrong...!!!");
+                    return;
+            }
+
         }
 
     }
-}
+
+    public static void itemManagement() {
+    }
+
+    public static void orderManagement() {
+    }
+
+    public static void customerManagement() {
+        //get customer input
+        Scanner input = new Scanner(System.in);
+
+        //manage customer questions
+        String customerQuestions[] = {
+                "1) Save Customer",
+                "2) Find Customer",
+                "3) Update Customer",
+                "4) Delete Customer",
+                "5) Find All Customer",
+                "6) Back to Home",
+        };
+
+        while (true){
+            for (String customerQuestion:customerQuestions) {
+                System.out.println(customerQuestion);
+            }
+
+            int userInput = input.nextInt();
+
+            switch (userInput){
+                case 1:
+                    saveCustomer();
+                    break;
+                case 2:
+                    findCustomer();
+                    break;
+                case 3:break;
+                case 4:break;
+                case 5:break;
+                case 6:break;
+
+                default:break;
+            }
+        }
+
+
+    }
+
+    private static void findCustomer() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter Customer NIC");
+        String nic = input.nextLine();
+
+        for (int i=0; i < customer.length; i++){
+            if (customer[i][0]!=null){
+                if(customer[i][0].equals(nic)){
+                    System.out.println("======= Customer details under "+customer[i][0]+" NIC =======");
+                    System.out.println("NIC : "+customer[i][0]);
+                    System.out.println("Name : "+customer[i][1]);
+                    System.out.println("Address : "+customer[i][2]);
+                    System.out.println("Salary : "+customer[i][3]);
+                    System.out.println("==============");
+                    System.out.println("1) Do you want find another Customer?");
+                    System.out.println("2) Back to menu");
+
+                    int option = input.nextInt();
+
+                    switch (option){
+                        case 1:
+                            findCustomer();
+                        case 2:
+                            return;
+                        default:
+                            return;
+                    }
+
+                }
+            }
+        }
+        System.out.println("No found data under "+nic+" this NIC");
+    }
+
+    public static void saveCustomer(){
+        Scanner input = new Scanner(System.in);
+
+        while (true){
+            String name, nic, address;
+            double salary;
+
+            System.out.println("Enter Customer NIC");
+            nic = input.nextLine();
+            System.out.println("Enter Customer Name");
+            name = input.nextLine();
+            System.out.println("Enter Customer Address");
+            address = input.nextLine();
+            System.out.println("Enter Customer Salary");
+            salary = input.nextDouble();
+
+            customerForLoop:
+            for (int i = 0; i < customer.length; i++){
+                if (customer[i][0]!=null){
+                    if (customer[i][0].equals(nic)) {
+                        System.out.println("Customer Already Exists");
+                        break;
+                    }
+                }else {
+                    customer[i][0] = nic;
+                    customer[i][1] = name;
+                    customer[i][2] = address;
+                    customer[i][3] = String.valueOf(salary);
+
+                    System.out.println("Customer details saved");
+                    System.out.println("Do you want add another Customer?");
+                    System.out.println("1) Do you want add another Customer?");
+                    System.out.println("2) Back to menu");
+
+                    int option = input.nextInt();
+
+                    switch (option){
+                        case 1:
+                            saveCustomer();
+                        case 2:
+                            return;
+                        default:
+                            return;
+                    }
+                }
+            }
+        }
+    }
+
+} 
