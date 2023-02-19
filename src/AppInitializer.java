@@ -210,8 +210,12 @@ public class AppInitializer {
                 case 3:
                     updateCustomer();
                     break;
-                case 4:break;
-                case 5:break;
+                case 4:
+                    deleteCustomer();
+                    break;
+                case 5:
+                    findAllCustomers();
+                    break;
                 case 6:break;
 
                 default:break;
@@ -219,6 +223,54 @@ public class AppInitializer {
         }
 
 
+    }
+
+    private static void findAllCustomers() {
+
+        for (int i=0; i< customer.length; i++){
+            if(customer[i][0]!=null){
+                System.out.println("NIC : "+customer[i][0]+"\tNAME : "+customer[i][1]+"\tADDRESS : "+customer[i][2]+"\tSALARY : "+customer[i][3]);
+            }else {
+                return;
+            }
+        }
+    }
+
+    private static void deleteCustomer() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter delete Customer NIC");
+        String nic = input.nextLine();
+
+        for (int i=0; i < customer.length; i++){
+            if (customer[i][0]!=null){
+                if(customer[i][0].equals(nic)){
+
+                    System.out.println("NIC : "+customer[i][0]);
+                    System.out.println("Name : "+customer[i][1]);
+                    System.out.println("Address : "+customer[i][2]);
+                    System.out.println("Salary : "+customer[i][3]);
+
+                    System.out.println("If you want delete "+customer[i][1]+", then please press \"Yes\"");
+                    System.out.println("If you don't want delete "+customer[i][1]+", then please press \"No\"");
+
+                    int option = input.nextInt();
+                    if(option==1){
+                        customer[i][0] = null;
+                        customer[i][1] = null;
+                        customer[i][2] = null;
+                        customer[i][3] = null;
+                        System.out.println("Customer deleted");
+                        return;
+                    }else if(option==2){
+                        return;
+                    }else{
+                        System.out.println("Please enter a valid value");
+                    }
+
+                }
+            }
+        }
+        System.out.println("Customer not found");
     }
 
     private static void updateCustomer() {
@@ -341,4 +393,4 @@ public class AppInitializer {
         }
     }
 
-} 
+}
