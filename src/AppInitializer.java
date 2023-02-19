@@ -6,15 +6,33 @@ import java.util.Scanner;
 
 public class AppInitializer {
     //database area | can access all around the project
+    //email, pwd
     static String[][] users = new String[3][2];
 
+    //customer database
+    //nic, name, address, salary
     static String[][] customer = new String[100][4];
+    
+    //item database
+    //code, description, qtyOnHand, unitPrice
+    static  String[][] item = new String[100][4];
 
+    //order database
+    //date, orderId, item, total, nic
+    static String[][] order = new String[100][5];
+    
     public static void main(String[] args) {
 
         //input value
         Scanner input = new Scanner(System.in);
         boolean exitState=false;
+
+        //=====test item db
+        item[0][0] = "001";
+        item[0][1] = "Test Item";
+        item[0][2] = "15";
+        item[0][3] = "250";
+        //=====test item db
 
         //program initializer
         String[] initializeQuestions = {
@@ -156,10 +174,10 @@ public class AppInitializer {
                     customerManagement();
                     break ;
                 case 2:
-                    orderManagement();
+                    itemManagement();
                     break;
                 case 3:
-                    itemManagement();
+                    orderManagement();
                     break;
                 case 4:
                     System.out.println("Good bye...!!!");
@@ -177,6 +195,79 @@ public class AppInitializer {
     }
 
     public static void orderManagement() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter Customer NIC");
+        String nic = input.nextLine();
+
+        String name, address;
+        double salary;
+
+        //customer find
+        for (int i=0; i < customer.length; i++){
+            if (customer[i][0]!=null){
+                if(customer[i][0].equals(nic)){
+                    System.out.println("======= Customer details =======");
+                    name = customer[i][1];
+                    address = customer[i][2];
+                    salary = Double.parseDouble(customer[i][3]);
+                    System.out.println("==============");
+                }
+            }
+        }
+
+        System.out.println("Enter Item Code");
+        String code = input.nextLine();
+
+        String description;
+        double unitPrice=0;
+        int qtyOnHand;
+
+        //item find
+        for (int i=0; i < item.length; i++){
+            if (item[i][0]!=null){
+                if(item[i][0].equals(nic)){
+                    System.out.println("======= Item details =======");
+                    description = item[i][1];
+                    qtyOnHand = Integer.parseInt(item[i][2]);
+                    unitPrice = Double.parseDouble(item[i][3]);
+
+                    System.out.println("==============");
+                }
+            }
+        }
+
+        System.out.println("Enter Order Code");
+        String orderID = input.nextLine();
+
+        double total;
+        int date;
+        int orderId;
+
+
+        //place an order
+        for (int i=0; i< order.length; i++){
+            if (order[i][0]!=null){
+                if (order[i][0].equals(orderID)){
+                    System.out.println("Order ID exists");
+                    return;
+                }else {
+
+                    Date orderDate = new Date();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String selectedDate = dateFormat.format(orderDate);
+
+                    order[i][0]=orderID;
+                    order[i][1]=nic;
+                    order[i][2]=code;
+                    order[i][3]=selectedDate;
+                    order[i][4]=String.valueOf(unitPrice);
+
+
+                }
+            }
+        }
+        System.out.println("Order Completed.");
+
     }
 
     public static void customerManagement() {
@@ -216,9 +307,12 @@ public class AppInitializer {
                 case 5:
                     findAllCustomers();
                     break;
-                case 6:break;
+                case 6:
+                    openDashboard();
+                    break;
 
-                default:break;
+                default:
+                    return;
             }
         }
 
