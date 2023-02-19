@@ -207,7 +207,9 @@ public class AppInitializer {
                 case 2:
                     findCustomer();
                     break;
-                case 3:break;
+                case 3:
+                    updateCustomer();
+                    break;
                 case 4:break;
                 case 5:break;
                 case 6:break;
@@ -217,6 +219,43 @@ public class AppInitializer {
         }
 
 
+    }
+
+    private static void updateCustomer() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Insert NIC to find the Customer");
+        String nic = input.nextLine();
+
+        for (int i=0; i < customer.length; i++){
+            if (customer[i][0]!=null){
+                if(customer[i][0].equals(nic)){
+
+                    String newName, newNic, newAddress;
+                    double newSalary;
+
+                    System.out.println("NIC : "+customer[i][0]);
+                    System.out.println("Name : "+customer[i][1]);
+                    System.out.println("Address : "+customer[i][2]);
+                    System.out.println("Salary : "+customer[i][3]);
+
+                    System.out.println("==================");
+
+                    System.out.println("Edit Customer Name");
+                    newName = input.nextLine();
+                    System.out.println("Edit Customer Address");
+                    newAddress = input.nextLine();
+                    System.out.println("Edit Customer Salary");
+                    newSalary = input.nextDouble();
+
+                    customer[i][1] = newName;
+                    customer[i][2] = newAddress;
+                    customer[i][3] = String.valueOf(newSalary);
+                    System.out.println("Customer detail updated");
+                    return;
+                }
+            }
+        }
+        System.out.println("Customer not found");
     }
 
     private static void findCustomer() {
@@ -274,7 +313,7 @@ public class AppInitializer {
                 if (customer[i][0]!=null){
                     if (customer[i][0].equals(nic)) {
                         System.out.println("Customer Already Exists");
-                        break;
+                        return;
                     }
                 }else {
                     customer[i][0] = nic;
